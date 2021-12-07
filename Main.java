@@ -1,29 +1,6 @@
+package com.company;
 
 public class Main {
-
-    /**
-     *  It transforms stream of characters into a every alternate character as lower to upper
-     *  ( It assumes empty character as also character stream .)
-     *  Time Complexity O(n/2)
-     * @param word
-     * @return
-     */
-    public static String tranform(String word){
-
-        int len = word.length();
-        StringBuffer accumulator = new StringBuffer();
-
-        for (int i = 0; i <len ; i++) {
-            char c =  word.charAt(i);
-            if(i%2 == 0 && c!='i'){
-                accumulator.append(Character.toUpperCase(c));
-            }else {
-                accumulator.append(Character.toLowerCase(c));
-            }
-        }
-        return  accumulator.toString();
-    }
-
     /**
      *  It transforms stream of characters into a every alternate character as lower to upper
      *  ( It assumes empty character as also character stream .)
@@ -38,16 +15,44 @@ public class Main {
         for (int i = 0,j=len-1; i <= j; i++,j--) {
             char left =  word.charAt(i);
             char right = word.charAt(j);
-            accumulator[i]= Character.toLowerCase(left);
-            accumulator[j]= Character.toLowerCase(right);
-            if( (left != 'i' || left != 'I') && i%2 == 0){
+            boolean isLeftI = (left =='i' || left == 'I');
+            boolean isRightI = (right =='i' || right == 'I');
+            accumulator[i]=  isLeftI ? left:Character.toLowerCase(left);
+            accumulator[j]=  isRightI ? right : Character.toLowerCase(right);
+            if( !isLeftI && i%2 == 0){
                 accumulator[i]= Character.toUpperCase(left);
             }
-            if((right != 'i'|| right != 'I') && j%2 == 0){
+            if( !isRightI && j%2 == 0){
                 accumulator[j]= Character.toUpperCase(right);
             }
         }
         return String.valueOf(accumulator);
+    }
+    /**
+     *  It transforms stream of characters into a every alternate character as lower to upper
+     *  ( It assumes empty character as also character stream .)
+     *  Time Complexity O(n/2)
+     * @param word
+     * @return
+     */
+    public static String tranform(String word){
+
+        int len = word.length();
+        StringBuffer accumulator = new StringBuffer();
+
+        for (int i = 0; i <len ; i++) {
+            char c =  word.charAt(i);
+            if(c=='i' || c == 'I'){
+                accumulator.append(c);
+                continue;
+            }
+            if(i%2 == 0 ){
+                accumulator.append(Character.toUpperCase(c));
+            }else {
+                accumulator.append(Character.toLowerCase(c));
+            }
+        }
+        return  accumulator.toString();
     }
 
     public static void main(String[] args) {
