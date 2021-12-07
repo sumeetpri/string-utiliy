@@ -1,4 +1,3 @@
-package com.company;
 
 public class Main {
     /**
@@ -28,6 +27,27 @@ public class Main {
         }
         return String.valueOf(accumulator);
     }
+
+    public static String trasform_ignore_special(String word){
+        int len = word.length();
+        StringBuffer accumulator = new StringBuffer();
+        boolean isEven = true;
+        for (int i = 0; i <len ; i++) {
+            char c =  word.charAt(i);
+            if(c =='i' || c == 'I' || !Character.isAlphabetic(c)){
+                accumulator.append(c);
+                continue;
+            }
+            if( isEven ){
+                accumulator.append(Character.toUpperCase(c));
+                isEven = false;
+            }else {
+                accumulator.append(Character.toLowerCase(c));
+                isEven = true;
+            }
+        }
+        return  accumulator.toString();
+    }
     /**
      *  It transforms stream of characters into a every alternate character as lower to upper
      *  ( It assumes empty character as also character stream .)
@@ -56,11 +76,12 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        String input = "This is cisco interview";
+        String input = "abcdefghijklmopq";
+
 
         long startTime = System.nanoTime();
         String output = tranform(input);
-        assert output == "This iS CiScO inTeRvieW";
+        assert output == "AbCdEfGhiJkLmOpQ";
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);
         System.out.println(output);
@@ -69,7 +90,7 @@ public class Main {
         startTime = System.nanoTime();
         String outputFast = transformFast(input);
         endTime = System.nanoTime();
-        assert outputFast == "This iS CiScO inTeRvieW";
+        assert outputFast == "AbCdEfGhiJkLmOpQ";
         duration = (endTime - startTime);
         System.out.println(outputFast);
         System.out.println("Time Taken "+duration);
@@ -92,5 +113,11 @@ public class Main {
         outputFast = transformFast(input);
         System.out.println(outputFast);
         assert outputFast == "AbCd";
+
+
+        input = "This is cisco interview ";
+        output = trasform_ignore_special(input);
+        System.out.println(output);
+        assert outputFast == "ThiS is CisCo iNtErVieW";
     }
 }
